@@ -22,24 +22,8 @@ load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 app = Flask(__name__)
 
-# ALLOWED_ORIGINS env var (comma-separated).
-# Set to * to allow all origins, or a comma-separated list of specific origins.
-# e.g. ALLOWED_ORIGINS=https://gfg-hackfest-phi.vercel.app
-_allowed_origins_env = os.getenv("ALLOWED_ORIGINS", "")
-if _allowed_origins_env.strip() == "*":
-    CORS(app)  # allow all origins
-else:
-    _extra_origins = [
-        o.strip()
-        for o in _allowed_origins_env.split(",")
-        if o.strip()
-    ]
-    CORS(app, origins=[
-        "http://localhost:5173",
-        "http://localhost:3000",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:3000",
-    ] + _extra_origins)
+# Allow all origins — safe for a public demo/hackathon project.
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # ─── App state ────────────────────────────────────────────────────────────────
 _state = {
