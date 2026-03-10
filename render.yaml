@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: nykaa-bi-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: GEMINI_API_KEY
+        sync: false          # set manually in Render dashboard
+      - key: ALLOWED_ORIGINS
+        sync: false          # set to your Vercel URL after deploying frontend
+    autoDeploy: true
