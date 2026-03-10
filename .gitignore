@@ -1,0 +1,31 @@
+.env
+.env.local
+.env.*.local
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+.streamlit/secrets.toml
+*.sqlite
+*.db
+.DS_Store
+Thumbs.db
+venv/
+env/
+.venv/
+
+# Node / Frontend
+node_modules/
+dist/
+.vite/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+.venv/

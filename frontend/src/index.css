@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #080B12;
+    color: #E2E8F0;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── Scrollbar ─────────────────────────── */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(252,39,121,0.25); border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(252,39,121,0.55); }
+
+  ::selection { background-color: rgba(252,39,121,0.28); color: #fff; }
+}
+
+@layer components {
+
+  /* ── Glass Cards ──────────────────────── */
+  .glass-card {
+    background: rgba(20,24,38,0.85);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 18px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .chart-card {
+    background: linear-gradient(160deg, rgba(22,26,42,0.95) 0%, rgba(16,18,30,0.98) 100%);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .chart-card:hover {
+    border-color: rgba(252,39,121,0.18);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(252,39,121,0.08), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+
+  /* ── Primary Button ──────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           text-white font-semibold px-5 py-2.5 rounded-xl
+           active:scale-95 transition-all duration-200
+           disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100;
+    background: linear-gradient(135deg, #FC2779 0%, #E8185E 50%, #C4124E 100%);
+    box-shadow: 0 4px 20px rgba(252,39,121,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  .btn-primary:not(:disabled):hover {
+    box-shadow: 0 6px 28px rgba(252,39,121,0.5), inset 0 1px 0 rgba(255,255,255,0.2);
+    transform: translateY(-1px);
+  }
+  .btn-primary:not(:disabled):active { transform: translateY(0) scale(0.97); }
+
+  /* ── Ghost Button ────────────────────── */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           text-[#94A3B8] px-3.5 py-2 rounded-xl text-sm
+           transition-all duration-200;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .btn-ghost:hover {
+    color: #FC2779;
+    border-color: rgba(252,39,121,0.4);
+    background: rgba(252,39,121,0.06);
+  }
+
+  /* ── Danger Button ───────────────────── */
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2
+           px-3.5 py-2 rounded-xl text-sm
+           transition-all duration-200;
+    color: #F87171;
+    background: rgba(239,68,68,0.06);
+    border: 1px solid rgba(239,68,68,0.2);
+  }
+  .btn-danger:hover {
+    background: rgba(239,68,68,0.12);
+    border-color: rgba(239,68,68,0.4);
+    color: #FCA5A5;
+  }
+
+  /* ── Input ────────────────────────────── */
+  .input-base {
+    @apply w-full text-[#E2E8F0] rounded-xl px-4 py-3
+           focus:outline-none transition-all duration-200
+           placeholder:text-[#3D4464];
+    background: rgba(8,11,18,0.7);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .input-base:focus {
+    border-color: rgba(252,39,121,0.5);
+    box-shadow: 0 0 0 3px rgba(252,39,121,0.08);
+  }
+
+  /* ── Status Pills ─────────────────────── */
+  .pill-green {
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full;
+    color: #4ADE80; background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.2);
+  }
+  .pill-red {
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full;
+    color: #F87171; background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.2);
+  }
+  .pill-blue {
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full;
+    color: #60A5FA; background: rgba(96,165,250,0.08); border: 1px solid rgba(96,165,250,0.2);
+  }
+
+  /* ── Loading Dots ─────────────────────── */
+  .loading-dot {
+    @apply w-1.5 h-1.5 rounded-full inline-block;
+    background: #FC2779;
+    animation: loading-dot 1.4s ease-in-out infinite;
+  }
+  .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  /* ── SQL Block ────────────────────────── */
+  .sql-block {
+    @apply font-mono text-[0.78rem] text-[#A8C4E0]
+           rounded-xl p-4 whitespace-pre-wrap break-all leading-relaxed;
+    background: rgba(4,6,14,0.9);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* ── Section Divider ─────────────────── */
+  .section-label {
+    @apply text-[0.68rem] font-bold uppercase tracking-widest;
+    color: rgba(148,163,184,0.5);
+  }
+}
+
+@layer utilities {
+  .text-gradient-pink {
+    background: linear-gradient(90deg, #FC2779 0%, #FF6BAE 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-purple {
+    background: linear-gradient(90deg, #A855F7 0%, #EC4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-pink  { box-shadow: 0 0 28px rgba(252,39,121,0.35); }
+  .glow-sm    { box-shadow: 0 0 12px rgba(252,39,121,0.2); }
+
+  .animate-delay-100 { animation-delay: 100ms; }
+  .animate-delay-200 { animation-delay: 200ms; }
+  .animate-delay-300 { animation-delay: 300ms; }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Subtle mesh background for panels */
+  .mesh-bg {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 10% 0%, rgba(252,39,121,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(132,94,194,0.05) 0%, transparent 55%);
+  }
+}
