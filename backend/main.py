@@ -22,19 +22,24 @@ load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env")
 
 app = Flask(__name__)
 
-# Extra origins supplied via ALLOWED_ORIGINS env var (comma-separated)
-# e.g. ALLOWED_ORIGINS=https://your-app.vercel.app
-_extra_origins = [
-    o.strip()
-    for o in os.getenv("ALLOWED_ORIGINS", "").split(",")
-    if o.strip()
-]
-CORS(app, origins=[
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "http://127.0.0.1:5173",
-    "http://127.0.0.1:3000",
-] + _extra_origins)
+# ALLOWED_ORIGINS env var (comma-separated).
+# Set to * to allow all origins, or a comma-separated list of specific origins.
+# e.g. ALLOWED_ORIGINS=https://gfg-hackfest-phi.vercel.app
+_allowed_origins_env = os.getenv("ALLOWED_ORIGINS", "")
+if _allowed_origins_env.strip() == "*":
+    CORS(app)  # allow all origins
+else:
+    _extra_origins = [
+        o.strip()
+        for o in _allowed_origins_env.split(",")
+        if o.strip()
+    ]
+    CORS(app, origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:3000",
+    ] + _extra_origins)
 
 # ─── App state ────────────────────────────────────────────────────────────────
 _state = {
