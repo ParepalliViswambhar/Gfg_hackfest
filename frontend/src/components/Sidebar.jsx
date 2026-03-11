@@ -82,10 +82,10 @@ export default function Sidebar() {
             className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-pink-glow flex-shrink-0 transition-opacity group-hover:opacity-75"
             style={{ background: 'linear-gradient(135deg, #FC2779 0%, #C4124E 100%)' }}
           >
-            <span className="text-white font-black text-base tracking-tight">N</span>
+            <span className="text-white font-black text-base tracking-tight">iQ</span>
           </div>
           <div>
-            <h1 className="text-gradient-pink font-black text-[0.95rem] leading-tight tracking-tight group-hover:opacity-75 transition-opacity">Nykaa BI</h1>
+            <h1 className="text-gradient-pink font-black text-[0.95rem] leading-tight tracking-tight group-hover:opacity-75 transition-opacity">InsightQ</h1>
             <p className="text-[#334155] text-[0.68rem] mt-0.5 font-medium tracking-wide uppercase">Conversational Analytics</p>
           </div>
         </button>
@@ -172,7 +172,7 @@ export default function Sidebar() {
                   }`}
                   style={dataMode === mode ? { background: 'linear-gradient(135deg, #FC2779 0%, #C4124E 100%)' } : {}}
                 >
-                  {mode === 'default' ? 'Nykaa Dataset' : 'Upload CSV'}
+                  {mode === 'default' ? 'Default Dataset' : 'Upload CSV'}
                 </button>
               ))}
             </div>
@@ -180,7 +180,7 @@ export default function Sidebar() {
             {dataMode === 'default' ? (
               <button onClick={loadDefaultDataset} disabled={loading} className="btn-primary w-full text-sm py-2.5">
                 {loading ? <RefreshCw size={13} className="animate-spin" /> : <Database size={13} />}
-                {loading ? 'Loading…' : 'Load Nykaa Dataset'}
+                {loading ? 'Loading…' : 'Load Default Dataset'}
               </button>
             ) : (
               <div>

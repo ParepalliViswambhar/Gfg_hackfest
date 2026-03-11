@@ -21,7 +21,7 @@ export default function MainPanel() {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3">
               <h1 className="text-[1.05rem] font-black leading-tight tracking-tight">
-                <span className="text-gradient-pink">Nykaa</span>
+                <span className="text-gradient-pink">InsightQ</span>
                 <span className="text-[#1E2A3A] mx-2 font-light">|</span>
                 <span className="text-[#CBD5E1] font-medium">Chat with your Data</span>
               </h1>

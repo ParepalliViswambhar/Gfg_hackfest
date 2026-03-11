@@ -51,7 +51,7 @@ export default function LoginPage({ onLogin }) {
             </div>
           </div>
           <h1 className="text-2xl font-black text-[#E2E8F0] leading-tight">
-            <span className="text-gradient-pink">Nykaa</span> BI
+            <span className="text-gradient-pink">Insight</span>Q
           </h1>
           <p className="text-[#475569] text-sm mt-1">Conversational Analytics Dashboard</p>
         </div>
@@ -149,7 +149,7 @@ export default function LoginPage({ onLogin }) {
         </div>
 
         <p className="text-center text-[#1E2A3A] text-[0.7rem] mt-5">
-          Powered by Google Gemini · Nykaa BI Dashboard
+          Powered by Google Gemini · InsightQ Dashboard
         </p>
       </div>
     </div>

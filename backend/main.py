@@ -1,5 +1,5 @@
 """
-main.py — Flask Backend for Nykaa BI Dashboard
+main.py — Flask Backend for InsightQ Dashboard
 
 Exposes REST endpoints consumed by the React frontend.
 Run:  python backend/main.py
@@ -243,7 +243,7 @@ def load_default():
         session_id = auth_module.create_chat_session(user["user_id"], db.table_name)
         df = db.df
         return jsonify({
-            "message": "Nykaa dataset loaded successfully.",
+            "message": "Dataset loaded successfully.",
             "table_name": db.table_name,
             "rows": len(df),
             "columns": db.get_column_names(),

@@ -187,7 +187,7 @@ export default function ChatMessage({ message, onChipClick }) {
         <div className="flex items-center gap-2 mb-2.5">
           <span className="text-[#FC2779] text-xs font-bold tracking-wide flex items-center gap-1.5">
             <Sparkles size={11} />
-            Nykaa BI
+            InsightQ
           </span>
           {is_followup && (
             <span className="pill-blue text-[0.62rem]">

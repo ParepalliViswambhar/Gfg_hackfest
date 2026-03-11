@@ -30,7 +30,7 @@ const FEATURES = [
 
 const STEPS = [
   { num: '01', label: 'Sign in', sub: 'Your account is ready', done: 'pink' },
-  { num: '02', label: 'Load a dataset', sub: 'Nykaa CSV or yours', done: 'purple' },
+  { num: '02', label: 'Load a dataset', sub: 'Default CSV or yours', done: 'purple' },
   { num: '03', label: 'Ask anything', sub: 'In plain English', done: 'amber' },
 ]
 
@@ -133,7 +133,7 @@ export default function EmptyState() {
         className="btn-primary px-8 py-3.5 text-sm animate-pulse-glow animate-fade-up font-bold"
         style={{ animationDelay: '460ms' }}
       >
-        {loading ? 'Loading…' : '🚀 Load Nykaa Dataset & Start'}
+        {loading ? 'Loading…' : '🚀 Load Dataset & Start'}
       </button>
     </div>
   )
