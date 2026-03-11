@@ -18,11 +18,11 @@ import google.generativeai as genai
 
 # ─── Model config ─────────────────────────────────────────────────────────────
 AVAILABLE_MODELS: dict[str, str] = {
-    "gemini-2.5-flash": "Gemini 2.5 Flash",
+    "gemini-2.5-flash-lite": "Gemini 2.5 Flash Lite",
     # Add more models here in the future, e.g.:
     # "gemini-2.0-pro": "Gemini 2.0 Pro",
 }
-DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
+DEFAULT_GEMINI_MODEL = "gemini-2.5-flash-lite"
 
 
 # ─── Prompt Templates ─────────────────────────────────────────────────────────
