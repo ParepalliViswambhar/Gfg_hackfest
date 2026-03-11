@@ -144,7 +144,11 @@ function BarChartView({ info }) {
 
 // ─── Horizontal Bar ─────────────────────────────────────────────────────────
 function HBarView({ info }) {
-  const { data } = info
+  const { data, series = [] } = info
+  // Resolve the actual value key: use series[0], or fall back to first numeric key, or 'value'
+  const valueKey = series[0]
+    || Object.keys(data[0] || {}).find(k => k !== 'name' && typeof (data[0] || {})[k] === 'number')
+    || 'value'
   const yWidth = Math.min(Math.max(...data.map(d => String(d.name).length)) * 7 + 16, 200)
   return (
     <ResponsiveContainer width="100%" height={Math.max(300, data.length * 48)}>
@@ -164,7 +168,7 @@ function HBarView({ info }) {
         <XAxis type="number" tick={TICK} axisLine={false} tickLine={false} tickFormatter={fmt} />
         <YAxis type="category" dataKey="name" tick={TICK} axisLine={false} tickLine={false} width={yWidth} />
         <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(252,39,121,0.05)' }} />
-        <Bar dataKey="value" radius={[0, 8, 8, 0]} maxBarSize={32}>
+        <Bar dataKey={valueKey} radius={[0, 8, 8, 0]} maxBarSize={32}>
           {data.map((_, i) => (
             <Cell key={i} fill={`url(#hb${i})`} />
           ))}

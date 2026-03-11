@@ -9,7 +9,7 @@ import { useApp } from '../context/AppContext'
 export default function Sidebar() {
   const {
     user, handleLogout,
-    dbReady, datasetInfo, loading,
+    dbReady, datasetInfo, loading, loadingStep,
     availableModels, selectedModel, selectModel,
     suggestions, suggestionsLoading,
     chatSessions, currentSessionId,
@@ -23,11 +23,22 @@ export default function Sidebar() {
   const [dataMode, setDataMode] = useState('default')
   const [schemaVisible, setSchemaVisible] = useState(false)
   const [historyOpen, setHistoryOpen] = useState(false)
+  const [uploadedFileName, setUploadedFileName] = useState(null)
   const fileRef = useRef(null)
+
+  const isUploading = loading && loadingStep.startsWith('Uploading')
+
+  const handleLoadDefault = async () => {
+    const success = await loadDefaultDataset()
+    if (success) setUploadedFileName(null)
+  }
 
   const handleUpload = async (e) => {
     const file = e.target.files?.[0]
-    if (file) await uploadDataset(file)
+    if (file) {
+      const success = await uploadDataset(file)
+      if (success) setUploadedFileName(file.name)
+    }
     e.target.value = ''
   }
 
@@ -172,48 +183,71 @@ export default function Sidebar() {
                   }`}
                   style={dataMode === mode ? { background: 'linear-gradient(135deg, #FC2779 0%, #C4124E 100%)' } : {}}
                 >
-                  {mode === 'default' ? 'Default Dataset' : 'Upload CSV'}
+                  {mode === 'default' ? 'Nykaa Dataset' : 'Upload CSV'}
                 </button>
               ))}
             </div>
 
             {dataMode === 'default' ? (
-              <button onClick={loadDefaultDataset} disabled={loading} className="btn-primary w-full text-sm py-2.5">
-                {loading ? <RefreshCw size={13} className="animate-spin" /> : <Database size={13} />}
-                {loading ? 'Loading…' : 'Load Default Dataset'}
-              </button>
+              dbReady && !uploadedFileName ? (
+                <div className="rounded-xl p-3 space-y-2" style={{ background: 'rgba(74,222,128,0.04)', border: '1px solid rgba(74,222,128,0.15)' }}>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-green-400" style={{ boxShadow: '0 0 8px rgba(74,222,128,0.6)' }} />
+                    <span className="text-green-400 text-xs font-bold">Nykaa Dataset Loaded</span>
+                  </div>
+                  <p className="text-[#94A3B8] text-[0.72rem]">
+                    {datasetInfo?.rows?.toLocaleString()} rows · {datasetInfo?.columns?.length} columns
+                  </p>
+                  <button
+                    onClick={handleLoadDefault}
+                    disabled={loading}
+                    className="btn-ghost w-full text-xs py-1.5"
+                  >
+                    <RefreshCw size={11} /> Reload
+                  </button>
+                </div>
+              ) : (
+                <button onClick={handleLoadDefault} disabled={loading} className="btn-primary w-full text-sm py-2.5">
+                  {loading ? <RefreshCw size={13} className="animate-spin" /> : <Database size={13} />}
+                  {loading ? 'Loading…' : 'Load Nykaa Dataset'}
+                </button>
+              )
             ) : (
               <div>
                 <input type="file" accept=".csv" ref={fileRef} onChange={handleUpload} className="hidden" />
-                <button
-                  onClick={() => fileRef.current?.click()}
-                  disabled={loading}
-                  className="btn-ghost w-full text-sm py-2.5 border-dashed"
-                >
-                  <Upload size={13} />
-                  {loading ? 'Uploading…' : 'Choose CSV File'}
-                </button>
-                <p className="text-[#334155] text-[0.68rem] mt-2 text-center">
-                  Any CSV — the AI adapts automatically
-                </p>
+                {uploadedFileName && dbReady ? (
+                  <div className="rounded-xl p-3 space-y-2" style={{ background: 'rgba(74,222,128,0.04)', border: '1px solid rgba(74,222,128,0.15)' }}>
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-green-400" style={{ boxShadow: '0 0 8px rgba(74,222,128,0.6)' }} />
+                      <span className="text-green-400 text-xs font-bold">Uploaded</span>
+                    </div>
+                    <p className="text-[#94A3B8] text-[0.72rem] font-mono truncate" title={uploadedFileName}>{uploadedFileName}</p>
+                    <button
+                      onClick={() => { setUploadedFileName(null); fileRef.current?.click() }}
+                      disabled={loading}
+                      className="btn-ghost w-full text-xs py-1.5"
+                    >
+                      <Upload size={11} /> Replace File
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => fileRef.current?.click()}
+                      disabled={loading}
+                      className="btn-ghost w-full text-sm py-2.5 border-dashed"
+                    >
+                      <Upload size={13} />
+                      {isUploading ? 'Uploading…' : 'Choose CSV File'}
+                    </button>
+                    <p className="text-[#334155] text-[0.68rem] mt-2 text-center">
+                      Any CSV — the AI adapts automatically
+                    </p>
+                  </>
+                )}
               </div>
             )}
 
-            {dbReady && datasetInfo && (
-              <div
-                className="rounded-xl p-3.5 space-y-1.5"
-                style={{ background: 'rgba(74,222,128,0.04)', border: '1px solid rgba(74,222,128,0.15)' }}
-              >
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-green-400" style={{ boxShadow: '0 0 8px rgba(74,222,128,0.6)' }} />
-                  <span className="text-green-400 text-xs font-bold tracking-wide">Dataset Ready</span>
-                </div>
-                <p className="text-[#64748B] text-[0.72rem]">
-                  {datasetInfo.rows?.toLocaleString()} rows · {datasetInfo.columns?.length} columns
-                </p>
-                <p className="text-[#475569] text-[0.68rem] font-mono truncate">{datasetInfo.table_name}</p>
-              </div>
-            )}
           </div>
         </Section>
 

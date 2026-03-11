@@ -136,14 +136,14 @@ export function AppProvider({ children, user, onLogout }) {
 
   const loadDefaultDataset = useCallback(async () => {
     setLoading(true)
-    setLoadingStep('Loading default dataset…')
+    setLoadingStep('Loading Nykaa dataset…')
     try {
       const data = await apiLoadDefault()
       setDatasetInfo(data)
       setCurrentSessionId(data.session_id || null)
       setDbReady(true)
       setMessages([])
-      toast.success(`✅ Dataset loaded · ${data.rows.toLocaleString()} rows`)
+      toast.success(`✅ Nykaa dataset loaded · ${data.rows.toLocaleString()} rows`)
       fetchSuggestions()
       refreshSessions()
       return true
